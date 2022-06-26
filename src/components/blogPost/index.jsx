@@ -8,6 +8,7 @@ import ThumbUp from '@mui/icons-material/ThumbUp';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import "./blogPost.css";
 import { Context } from '../../context/Context';
+import { LoadingContext } from '../../context/LoadingContext';
 import Error from '../error';
 import { updatePost, getPost, deletePost } from '../../services/post';
 import { uploadImage } from '../../services/image';
@@ -25,10 +26,12 @@ export default function BlogPost() {
     const [error, setError] = useState(false);
     const comment = useRef();
     const { user } = useContext(Context);
+    const { loadingShow, loadingHide } = useContext(LoadingContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
+            loadingShow();
             try {
                 const result = await getPost(blogId);
                 setCategories(result.categories);
@@ -39,26 +42,37 @@ export default function BlogPost() {
             } catch (error) {
                 setError(error);
             }
+            finally {
+                loadingHide();
+            }
         })();
     }, [blogId]);
 
     const handleDelete = async (e) => {
+        loadingShow();
         try {
             await deletePost(blogId, { username: user.username });
             navigate("/");
         } catch (error) {
             setError(error);
         }
+        finally {
+            loadingHide();
+        }
     }
 
     const handleImageUpdate = async (e) => {
         if (e.target.files[0]) {
+            loadingShow();
             try {
                 let filename = await uploadImage(e.target.files[0]);
                 console.log(filename);
                 setPost({ ...post, photo: filename });
             } catch (error) {
                 setError(error);
+            }
+            finally {
+                loadingHide();
             }
         }
     }
@@ -72,11 +86,15 @@ export default function BlogPost() {
                 categories,
                 photo: post.photo
             }
+            loadingShow();
             try {
                 await updatePost(blogId, updatedPost);
                 setUpdateMode(false);
             } catch (error) {
                 setError("Unable to update the blog! Make sure the title is unique.");
+            }
+            finally {
+                loadingHide();
             }
         }
         else

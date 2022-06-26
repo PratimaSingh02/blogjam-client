@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import "./settings.css";
 import { Context } from '../../context/Context';
+import { LoadingContext } from '../../context/LoadingContext';
 import Error from "../error";
 import Success from "../success";
 import { updateUser } from '../../services/user';
@@ -8,17 +9,22 @@ import { uploadImage } from '../../services/image';
 
 export default function Settings() {
     const { user, dispatch } = useContext(Context);
+    const { loadingShow, loadingHide } = useContext(LoadingContext);
     const [userState, setUserState] = useState({ ...user, password: "" });
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
 
     const handleImageUpdate = async (e) => {
         if (e.target.files[0]) {
+            loadingShow();
             try {
                 const filename = await uploadImage(e.target.files[0]);
                 setUserState({ ...userState, profilePicture: filename });
             } catch (error) {
                 setError("Unable to update image! Try again.");
+            }
+            finally {
+                loadingHide();
             }
         }
     }
@@ -29,6 +35,7 @@ export default function Settings() {
             setError("Enter valid details!");
             return;
         }
+        loadingShow();
         try {
             const result = await updateUser(user._id, userState.username, userState.email,
                 userState.password, userState.profilePicture);
@@ -38,6 +45,9 @@ export default function Settings() {
         } catch (error) {
             setError("Unable to update account details! Try again.");
             setSuccess(false);
+        }
+        finally {
+            loadingHide();
         }
     }
 

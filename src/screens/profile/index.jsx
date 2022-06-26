@@ -5,7 +5,7 @@ import ProfileOptions from '../../components/profileOptions';
 import Posts from '../../components/posts';
 import { Context } from '../../context/Context';
 import Settings from "../../components/settings";
-import { Container } from "./style";
+import { Container, Content } from "./style";
 import Delete from '../../components/delete';
 
 export default function Profile() {
@@ -13,22 +13,24 @@ export default function Profile() {
 
     return (<Container>
         <ProfileOptions />
-        <Routes>
-            <Route path="/" element={<ProfileLayout />}>
-                <Route
-                    index
-                    element={<Posts user={user.username} />}
-                />
-                <Route
-                    path="settings"
-                    element={<Settings />}
-                />
-                <Route
-                    path="delete"
-                    element={<Delete />}
-                />
-            </Route>
-        </Routes>
+        <Content >
+            <Routes>
+                <Route path="/" element={<ProfileLayout />}>
+                    <Route
+                        index
+                        element={<Posts user={user.username} />}
+                    />
+                    <Route
+                        path="settings"
+                        element={<Settings />}
+                    />
+                    <Route
+                        path="delete"
+                        element={<Delete />}
+                    />
+                </Route>
+            </Routes>
+        </Content>
     </Container>)
 }
 

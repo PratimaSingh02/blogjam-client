@@ -6,3 +6,12 @@ export const Container = styled('div')(({ theme }) => ({
         flexDirection: "column"
     }
 }));
+
+export const Content = styled('div')(({ theme }) => ({
+    width: "100%",
+    marginLeft: 200,
+    [theme.breakpoints.down("sm")]: {
+        marginLeft: 0,
+        marginTop: 60
+    }
+}));

@@ -33,7 +33,7 @@ export const Image = styled('div')(({ theme }) => ({
     backgroundPosition: "center",
     [theme.breakpoints.down("sm")]: {
         height: 200,
-        background: 'url("https://cdn-ajggd.nitrocdn.com/kMoOFpDlsOVtlYJLrnSRNCQXaUFHZPTY/assets/static/optimized/rev-9b96f3d/wp-content/uploads/2021/01/nature-photography.jpg")',
+        backgroundImage: 'url("https://www.macmillandictionaryblog.com/wp-content/uploads/2018/08/Squirrel.jpg")',
         backgroundPosition: "left center"
     }
 }));

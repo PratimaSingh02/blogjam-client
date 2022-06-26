@@ -3,7 +3,9 @@ import { Typography } from '@mui/material';
 
 export const Container = styled('div')(({ theme }) => ({
     width: 200,
-    height: "calc(100vh - 50px)",
+    height: "100vh",
+    position: "fixed",
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -11,7 +13,7 @@ export const Container = styled('div')(({ theme }) => ({
     paddingTop: "1em",
     [theme.breakpoints.down("sm")]: {
         height: 50,
-        width: "inherit",
+        width: "100%",
         flexDirection: "row",
         justifyContent: "space-around",
         borderBottom: "1px solid lightgray",

@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Context } from '../../context/Context';
+import { LoadingContext } from '../../context/LoadingContext';
 import "./login.css";
 import Error from '../../components/error';
 import { login } from '../../services/auth';
@@ -9,12 +10,14 @@ export default function Login() {
     const usernameRef = useRef();
     const passwordRef = useRef();
     const { dispatch, isFetching } = useContext(Context);
+    const { loadingShow, loadingHide } = useContext(LoadingContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         let username = usernameRef.current.value;
         let password = passwordRef.current.value;
         if (username.trim() !== "" && password.trim() !== "") {
+            loadingShow();
             dispatch({ type: "LOGIN_START" });
             try {
                 const result = await login(usernameRef.current.value, passwordRef.current.value);
@@ -25,6 +28,9 @@ export default function Login() {
             } catch (error) {
                 dispatch({ type: "LOGIN_FAILURE" });
                 setError("Uh Oh! Unable to sign in. Please try again.");
+            }
+            finally {
+                loadingHide();
             }
         }
         else
