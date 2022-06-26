@@ -1,0 +1,36 @@
+.write {
+    width: 80%;
+    margin: 1em auto 0 auto;
+}
+
+.submit-div {
+    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.write-submit {
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.title {
+    width: 100%;
+    word-wrap: break-word;
+    resize: none;
+}
+
+
+@media screen and (max-width:599px) {
+
+    .write,
+    .write-image {
+        width: 95%;
+    }
+}
