@@ -26,6 +26,7 @@ export default function Login() {
                     payload: result.user
                 });
             } catch (error) {
+                console.log(error);
                 dispatch({ type: "LOGIN_FAILURE" });
                 setError("Uh Oh! Unable to sign in. Please try again.");
             }
